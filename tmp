@@ -1,33 +1,36 @@
-import json
 import os
+from evalscope import TaskConfig, run_task
+from evalscope.constants import JudgeStrategy
 
-def merge_json_files(input_folder, output_file):
-    """
-    读取文件夹下所有 JSON 文件（包括子文件夹），合并为一个列表并输出
-    
-    参数:
-    input_folder: 包含 JSON 文件的文件夹路径
-    output_file: 合并后输出的文件路径
-    """
-    merged_data = []
-    
-    # 递归遍历所有文件夹和子文件夹
-    for root, dirs, files in os.walk(input_folder):
-        for file in files:
-            if file.lower().endswith('.json'):  # 识别所有 JSON 文件
-                file_path = os.path.join(root, file)
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        # 根据内容类型合并数据
-                        if isinstance(data, list):
-                            merged_data.extend(data)  # 列表则合并元素
-                        else:
-                            merged_data.append(data)  # 对象则作为新元素
-                except Exception as e:
-                    print(f"解析失败 {file_path}: {str(e)}")
-    
-    # 写入合并后的文件
-    with open(output_file, 'w', encoding='utf-8') as out_f:
-        json.dump(merged_data, out_f, ensure_ascii=False, indent=2)
-    print(f"成功合并 {len(merged_data)} 条数据到 {output_file}")
+task_cfg = TaskConfig(
+    model='Qwen/Qwen2.5-0.5B-Instruct',
+    datasets=[
+        'general_qa',
+    ],
+    dataset_args={
+        'general_qa': {
+            'dataset_id': 'custom_eval/text/qa',
+            'subset_list': [
+                'example'
+            ],
+        }
+    },
+    # judge 相关参数
+    judge_model_args={
+        'model_id': 'qwen2.5-72b-instruct',
+        'api_url': 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+        'api_key': os.getenv('DASHSCOPE_API_KEY'),
+        'generation_config': {
+            'temperature': 0.0,
+            'max_tokens': 4096
+        },
+        # 根据参考答案和模型输出，判断模型输出是否正确
+        'score_type': 'pattern',
+    },
+    # judge 并发数
+    judge_worker_num=5,
+    # 使用 LLM 进行评测
+    judge_strategy=JudgeStrategy.LLM,
+)
+
+run_task(task_cfg=task_cfg)

@@ -1,11 +1,33 @@
-curl https://api.deepseek.com/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <DeepSeek API Key>" \
-  -d '{
-        "model": "deepseek-chat",
-        "messages": [
-          {"role": "system", "content": "You are a helpful assistant."},
-          {"role": "user", "content": "Hello!"}
-        ],
-        "stream": false
-      }'
+import json
+import os
+
+def merge_json_files(input_folder, output_file):
+    """
+    读取文件夹下所有 JSON 文件（包括子文件夹），合并为一个列表并输出
+    
+    参数:
+    input_folder: 包含 JSON 文件的文件夹路径
+    output_file: 合并后输出的文件路径
+    """
+    merged_data = []
+    
+    # 递归遍历所有文件夹和子文件夹
+    for root, dirs, files in os.walk(input_folder):
+        for file in files:
+            if file.lower().endswith('.json'):  # 识别所有 JSON 文件
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        # 根据内容类型合并数据
+                        if isinstance(data, list):
+                            merged_data.extend(data)  # 列表则合并元素
+                        else:
+                            merged_data.append(data)  # 对象则作为新元素
+                except Exception as e:
+                    print(f"解析失败 {file_path}: {str(e)}")
+    
+    # 写入合并后的文件
+    with open(output_file, 'w', encoding='utf-8') as out_f:
+        json.dump(merged_data, out_f, ensure_ascii=False, indent=2)
+    print(f"成功合并 {len(merged_data)} 条数据到 {output_file}")

@@ -1,0 +1,149 @@
+2025-08-08 12:02:08,941 - evalscope - INFO - Dump task config to ./outputs/20250808_120207/configs/task_config_2dbd85.yaml
+2025-08-08 12:02:08,945 - evalscope - INFO - {
+    "model": "/mnt/data/Llmei/data/Qwen/Qwen3-4B",
+    "model_id": "Qwen3-4B",
+    "model_args": {},
+    "model_task": "text_generation",
+    "template_type": null,
+    "chat_template": null,
+    "datasets": [
+        "general_qa"
+    ],
+    "dataset_args": {
+        "general_qa": {
+            "name": "general_qa",
+            "dataset_id": "/mnt/data/Llmei/data/evalscope/qa",
+            "model_adapter": "generation",
+            "output_types": [
+                "generation"
+            ],
+            "subset_list": [
+                "think_sample200_eval"
+            ],
+            "metric_list": [
+                "AverageBLEU",
+                "AverageRouge"
+            ],
+            "few_shot_num": 0,
+            "few_shot_random": false,
+            "train_split": null,
+            "eval_split": "test",
+            "prompt_template": "请回答问题\n{query}",
+            "system_prompt": null,
+            "query_template": null,
+            "pretty_name": "General-QA",
+            "description": "A general question answering dataset for custom evaluation. For detailed instructions on how to use this benchmark, please refer to the [User Guide](https://evalscope.readthedocs.io/zh-cn/latest/advanced_guides/custom_dataset/llm.html#qa).",
+            "tags": [
+                "QA",
+                "Custom"
+            ],
+            "filters": {
+                "remove_until": "</think>"
+            },
+            "extra_params": {}
+        }
+    },
+    "dataset_dir": "/root/.cache/modelscope/hub/datasets",
+    "dataset_hub": "modelscope",
+    "generation_config": {
+        "max_tokens": 16384,
+        "temperature": 0.0,
+        "top_p": 1,
+        "top_k": 20,
+        "n": 1
+    },
+    "eval_type": "service",
+    "eval_backend": "Native",
+    "eval_config": null,
+    "stage": "all",
+    "limit": null,
+    "eval_batch_size": 16,
+    "mem_cache": false,
+    "use_cache": null,
+    "work_dir": "./outputs/20250808_120207",
+    "outputs": null,
+    "ignore_errors": false,
+    "debug": false,
+    "dry_run": false,
+    "seed": 42,
+    "api_url": "http://127.0.0.1:9161/v1/chat/completions",
+    "api_key": "EMPTY",
+    "timeout": 600000,
+    "stream": false,
+    "judge_strategy": "auto",
+    "judge_worker_num": 1,
+    "judge_model_args": {},
+    "analysis_report": false
+}
+2025-08-08 12:02:08,945 - evalscope - INFO - Start evaluating on dataset /mnt/data/Llmei/data/evalscope/qa
+2025-08-08 12:02:08,949 - evalscope - INFO - Use settings: > few_shot_num: 0, > few_shot_split: None, > target_eval_split: test
+2025-08-08 12:06:56,809 - evalscope - INFO - Dump predictions to ./outputs/20250808_120207/predictions/Qwen3-4B/general_qa_think_sample200_eval.jsonl.
+2025-08-08 12:07:49,009 - evalscope - INFO - 
+/mnt/data/Llmei/data/evalscope/qa report table:
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Model    | Dataset    | Metric    | Subset               |   Num |   Score | Cat.0   |
++==========+============+===========+======================+=======+=========+=========+
+| Qwen3-4B | general_qa | Rouge-1-R | think_sample200_eval |   200 |  0.4833 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-1-P | think_sample200_eval |   200 |  0.4758 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-1-F | think_sample200_eval |   200 |  0.4616 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-2-R | think_sample200_eval |   200 |  0.2197 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-2-P | think_sample200_eval |   200 |  0.2017 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-2-F | think_sample200_eval |   200 |  0.1967 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-L-R | think_sample200_eval |   200 |  0.3699 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-L-P | think_sample200_eval |   200 |  0.3071 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-L-F | think_sample200_eval |   200 |  0.3017 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-1    | think_sample200_eval |   200 |  0.3785 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-2    | think_sample200_eval |   200 |  0.2045 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-3    | think_sample200_eval |   200 |  0.1289 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-4    | think_sample200_eval |   200 |  0.0843 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+ 
+
+2025-08-08 12:07:49,010 - evalscope - INFO - Skipping report analysis (`analysis_report=False`).
+2025-08-08 12:07:49,015 - evalscope - INFO - Dump report to: ./outputs/20250808_120207/reports/Qwen3-4B/general_qa.json 
+
+2025-08-08 12:07:49,016 - evalscope - INFO - Evaluation finished on /mnt/data/Llmei/data/evalscope/qa
+2025-08-08 12:07:49,053 - evalscope - INFO - Overall report table: 
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Model    | Dataset    | Metric    | Subset               |   Num |   Score | Cat.0   |
++==========+============+===========+======================+=======+=========+=========+
+| Qwen3-4B | general_qa | Rouge-1-R | think_sample200_eval |   200 |  0.4833 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-1-P | think_sample200_eval |   200 |  0.4758 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-1-F | think_sample200_eval |   200 |  0.4616 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-2-R | think_sample200_eval |   200 |  0.2197 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-2-P | think_sample200_eval |   200 |  0.2017 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-2-F | think_sample200_eval |   200 |  0.1967 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-L-R | think_sample200_eval |   200 |  0.3699 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-L-P | think_sample200_eval |   200 |  0.3071 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | Rouge-L-F | think_sample200_eval |   200 |  0.3017 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-1    | think_sample200_eval |   200 |  0.3785 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-2    | think_sample200_eval |   200 |  0.2045 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-3    | think_sample200_eval |   200 |  0.1289 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+
+| Qwen3-4B | general_qa | bleu-4    | think_sample200_eval |   200 |  0.0843 | default |
++----------+------------+-----------+----------------------+-------+---------+---------+ 
+
+2025-08-08 12:07:49,053 - evalscope - INFO - Finished evaluation for Qwen3-4B on ['general_qa']
+2025-08-08 12:07:49,053 - evalscope - INFO - Output directory: ./outputs/20250808_120207
